@@ -59,7 +59,7 @@ int push(struct Stack* st, void* buffer) {
 
         printf("No memory\n");
 
-        return 0;
+        return ERROR;
     }
 
     new_elem->data = *((elem_t*) buffer);
@@ -67,7 +67,7 @@ int push(struct Stack* st, void* buffer) {
 
     st->head = new_elem;
 
-    return 1;
+    return OK;
 }
 
 
@@ -79,7 +79,7 @@ int top(struct Stack* st, void* buffer) {
 
     *((elem_t*) buffer) = st->head->data;
 
-    return 1;
+    return OK;
 }
 
 
@@ -94,7 +94,7 @@ int pop(struct Stack* st) {
 
     st->head = prev;
 
-    return 1;
+    return OK;
 }
 
 
