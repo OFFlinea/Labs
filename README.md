@@ -14,7 +14,7 @@ big_tests: \
 test_most_dublicates: \
 ![Изображение](https://github.com/OFFlinea/Labs/blob/Lab3/lab3/graphics/paragraph_4_graphic_tmd.png) \
 Быстрая сортировка с разбиением Ломуто выигрываает у других на big_tests, но оказывается на последнем месте на test_most_dublicates. \
-Толстое разбиение вырывается на второе место как ни странно на test_most_dublicates. Но самое лучшее разбиение всё равно у Хоара. \
+Толстое разбиение вырывается на второе место как ни странно на test_most_dublicates. Но самое лучшее разбиение всё равно у Хоара.
 ## Paragraph 5
 ![Изображение](https://github.com/OFFlinea/Labs/blob/Lab3/lab3/graphics/paragraph_5_graphic.png) \
 Лучшей быстрой сортировкой оказалась сортировка с pivotom из медианы трёх.
@@ -23,7 +23,7 @@ test_most_dublicates: \
 Размер блока должен быть примерно <= 16.
 ## Paragraph 7
 ![Изображение](https://github.com/OFFlinea/Labs/blob/Lab3/lab3/graphics/paragraph_7_graphic_C.png) \
-Самым оптимальным оказалось с = 6.
+Самым оптимальным оказалось с = 6. \
 ![Изображение](https://github.com/OFFlinea/Labs/blob/Lab3/lab3/graphics/paragraph_7_graphic.png) \
 Intro_sort победил best_quick_sort
 ## Paragraph 8
@@ -31,7 +31,7 @@ Intro_sort победил best_quick_sort
 LSD > MSD
 ## Introduction
 Подведём итоги: LSD порвало всех. \
-Вот список лучших сортировок: \
+Вот список лучших сортировок:
 1) Lsd_sort
 2) Msd_sort
 3) Intro_sort
