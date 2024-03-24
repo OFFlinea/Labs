@@ -1,7 +1,7 @@
-#ifndef BUBBLE_SORT.H
-#define BUBBLE_SORT.H
+#ifndef BUBBLE_SORT_H
+#define BUBBLE_SORT_H
 
-void bubble_sort(int* arr, unsigned int n) {
+void bubble_sort(int* arr, int n) {
 
     int i = 0, j = 0, temp = 0;
 

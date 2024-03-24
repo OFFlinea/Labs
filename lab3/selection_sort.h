@@ -1,7 +1,7 @@
-#ifndef SELECTION_SORT.H
-#define SELECTION_SORT.H
+#ifndef SELECTION_SORT_H
+#define SELECTION_SORT_H
 
-void selectionSort(int* arr, int n) {
+void selection_sort(int* arr, int n) {
 
     int i = 0, j = 0, min_idx = 0, temp = 0;
 

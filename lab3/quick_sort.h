@@ -1,7 +1,10 @@
-#ifndef QUICK_SORT.H
-#define QUICK_SORT.H
+#ifndef QUICK_SORT_H
+#define QUICK_SORT_H
 
 void swap(int* a, int* b) {
+
+    assert(a);
+    assert(b);
 
     int t = *a;
     *a = *b;
@@ -9,147 +12,195 @@ void swap(int* a, int* b) {
 }
 
 
-int partitionLomuto(int* arr, int low, int high) {
+int partitionLomuto(int* array, int low, int high) {
 
-    int pivot = arr[high];  
-    int i = (low - 1);  
+    assert(array);
+
+    int pivot = array[high];  
+    int i = low - 1;  
 
     for (int j = low; j <= high - 1; j++) {
 
-        if (arr[j] < pivot) {
-            i++;    
-            swap(&arr[i], &arr[j]);
-        }
-    }
-
-    swap(&arr[i + 1], &arr[high]);
-    return (i + 1);
-}
-
-
-void lomuto_quick_sort(int* arr, int low, int high) {
-
-    if (low < high) {
-
-        int pi = partitionLomuto(arr, low, high);
-
-        lomuto_quick_sort(arr, low, pi - 1);
-        lomuto_quick_sort(arr, pi + 1, high);
-    }
-}
-
-
-void Lomuto_quick_sort(int* arr, unsigned int n) {
-
-    lomuto_quick_sort(arr, 0, n);
-}
-
-
-int partitionHoare(int* arr, int low, int high) {
-
-    int pivot = arr[low];
-    int i = low - 1, j = high + 1;
-
-    while (true) {
-
-        do {
+        if (array[j] < pivot) {
+  
             i++;
-        } while (arr[i] < pivot);
-
-        do {
-            j--;
-        } while (arr[j] > pivot);
-
-        if (i >= j) {
-
-            return j;
+            swap(&array[i], &array[j]);
         }
-
-        swap(&arr[i], &arr[j]);
     }
+
+    swap(&array[i + 1], &array[high]);
+    return i + 1;
 }
 
 
-void hoare_quick_sort(int* arr, int low, int high) {
+void lomuto_quick_sort(int* array, int low, int high) {
+
+    assert(array);
 
     if (low < high) {
 
-        int pi = partitionHoare(arr, low, high);
+        int mid = partitionLomuto(array, low, high);
 
-        hoare_quick_sort(arr, low, pi);
-        hoare_quick_sort(arr, pi + 1, high);
+        lomuto_quick_sort(array, low, mid - 1);
+        lomuto_quick_sort(array, mid + 1, high);
     }
 }
 
 
-void Hoare_quick_sort(int* arr, unsigned int n) {
+void Lomuto_quick_sort(int* array, int n) {
 
-    hoare_quick_sort(arr, 0, n);
+    assert(array);
+
+    lomuto_quick_sort(array, 0, n - 1);
 }
 
 
-void partitionThick(int* arr, int low, int high, int* lp, int* hp) {
+int median_of_three_random(int* array, int low, int high) {
+
+    assert(array);
+
+    int random1 = low + rand() % (high - low + 1);
+    int random2 = low + rand() % (high - low + 1);
+    int random3 = low + rand() % (high - low + 1);
+
+    if (array[random1] <= array[random2] && array[random2] <= array[random3] || 
+        array[random3] <= array[random2] && array[random2] <= array[random1]) {
+
+        return array[random2];
+    }
+
+    else if (array[random2] <= array[random1] && array[random1] <= array[random3] ||
+             array[random3] <= array[random1] && array[random1] <= array[random2]) {
+
+        return array[random1];
+    }
+
+    return array[random3];
+}
+
+
+int partitionHoare(int* array, int low, int high) {
+
+    assert(array);
+
+    int pivot = median_of_three_random(array, low, high);
+
+    int left = low - 1;
+    int right = high + 1;
+
+    while (left < right) {
+
+        do {
+            left++;
+        } while (array[left] < pivot);
+
+        do {
+            right--;
+        } while (array[right] > pivot);
+
+        if (left < right) {
+            
+            swap(&array[left], &array[right]);
+        }
+    }
+
+    return right;
+}
+
+
+void hoare_qsort(int* array, int left, int right) {
+
+    assert(array);
+
+    if (left < right) {
+
+        int mid = partitionHoare(array, left, right);
+
+        hoare_qsort(array, left, mid);
+        hoare_qsort(array, mid + 1, right);
+    }
+}
+
+
+void Hoare_quick_sort(int* array, int n) {
+
+    assert(array);
+
+    hoare_qsort(array, 0, n - 1);
+}
+
+
+void partitionThick(int* array, int low, int high, int* left_pointer, int* right_pointer) {
+
+    assert(array);
 
     if (high - low <= 1) {
 
-        if (arr[high] < arr[low]) {
+        if (array[high] < array[low]) {
             
-            swap(&arr[high], &arr[low]);
+            swap(&array[high], &array[low]);
         }
 
-        *lp = low;
-        *hp = high;
+        *left_pointer = low;
+        *right_pointer = high;
+
         return;
     }
 
     int mid = low;
-    int pivot = arr[high];
+    int pivot = array[high];
 
     while (mid <= high) {
 
-        if (arr[mid] < pivot) {
+        if (array[mid] < pivot) {
 
-            swap(&arr[low++], &arr[mid++]);
+            swap(&array[low++], &array[mid++]);
         }
 
-        else if (arr[mid] == pivot) {
+        else if (array[mid] == pivot) {
 
             mid++;
         }
 
-        else if (arr[mid] > pivot) {
+        else if (array[mid] > pivot) {
 
-            swap(&arr[mid], &arr[high--]);
+            swap(&array[mid], &array[high--]);
         }
     }
 
-    *lp = low - 1;
-    *hp = mid;
+    *left_pointer = low - 1;
+    *right_pointer = mid;
 }
 
 
-void thick_quick_sort(int* arr, int low, int high) {
+void thick_quick_sort(int* array, int low, int high) {
+
+    assert(array);
 
     if (low < high) {
 
-        int lp, hp;
-        partitionThick(arr, low, high, &lp, &hp);
+        int left_pointer = 0, right_pointer = 0;
+        partitionThick(array, low, high, &left_pointer, &right_pointer);
 
-        quickSortThick(arr, low, lp);
-        quickSortThick(arr, hp, high);
+        thick_quick_sort(array, low, left_pointer);
+        thick_quick_sort(array, right_pointer, high);
     }
 }
 
 
-void Thick_quick_sort(int* arr, unsigned int n) {
+void Thick_quick_sort(int* array, int n) {
 
-    thick_quick_sort(arr, 0, n);
+    assert(array);
+
+    thick_quick_sort(array, 0, n - 1);
 }
 
 
-int partition_center(int* arr, int low, int high) {
+int partition_center(int* array, int low, int high) {
 
-    int pivot = arr[(low + high) / 2];
+    assert(array);
+
+    int pivot = array[(low + high) / 2];
     int i = low - 1;
     int j = high + 1;
 
@@ -157,74 +208,82 @@ int partition_center(int* arr, int low, int high) {
 
         do {
             i++;
-        } while (arr[i] < pivot);
+        } while (array[i] < pivot);
 
         do {
             j--;
-        } while (arr[j] > pivot);
+        } while (array[j] > pivot);
 
         if (i >= j) {
             return j;
         }
 
-        swap(&arr[i], &arr[j]);
+        swap(&array[i], &array[j]);
     }
 }
 
-void Center_element_quick_sort(int* arr, int low, int high) {
+void Center_element_quick_sort(int* array, int low, int high) {
+
+    assert(array);
 
     if (low < high) {
 
-        int pi = partition_center(arr, low, high);
-        Center_element_quick_sort(arr, low, pi);
-        Center_element_quick_sort(arr, pi + 1, high);
+        int mid = partition_center(array, low, high);
+        Center_element_quick_sort(array, low, mid);
+        Center_element_quick_sort(array, mid + 1, high);
     }
 }
 
-void center_element_quick_sort(int* arr, unsigned int n) {
+void center_element_quick_sort(int* array, int n) {
 
-    Center_element_quick_sort(arr, 0, n - 1);
+    assert(array);
+
+    Center_element_quick_sort(array, 0, n - 1);
 }
 
 
-int median_of_three(int* arr, int low, int high) {
+int median_of_three(int* array, int low, int high) {
+
+    assert(array);
 
     int mid = low + (high - low) / 2;
 
-    if (arr[low] > arr[mid]) {
+    if (array[low] > array[mid]) {
 
-        swap(&arr[low], &arr[mid]);
+        swap(&array[low], &array[mid]);
     }
 
-    if (arr[low] > arr[high]) {
+    if (array[low] > array[high]) {
 
-        swap(&arr[low], &arr[high]);
+        swap(&array[low], &array[high]);
     }
 
-    if (arr[mid] > arr[high]) {
+    if (array[mid] > array[high]) {
 
-        swap(&arr[mid], &arr[high]);
+        swap(&array[mid], &array[high]);
     }
 
-    swap(&arr[mid], &arr[high - 1]);
-    return arr[high - 1];
+    swap(&array[mid], &array[high - 1]);
+    return array[high - 1];
 }
 
 
-int partition_median_of_three(int* arr, int low, int high) {
+int partition_median_of_three(int* array, int low, int high) {
 
-    int pivot = median_of_three(arr, low, high);
+    assert(array);
+
+    int pivot = median_of_three(array, low, high);
     int i = low;
     int j = high - 1;
 
     while (true) {
 
-        while (arr[++i] < pivot);
-        while (arr[--j] > pivot);
+        while (array[++i] < pivot);
+        while (array[--j] > pivot);
 
         if (i < j) {
 
-            swap(&arr[i], &arr[j]);
+            swap(&array[i], &array[j]);
         }
 
         else {
@@ -233,30 +292,32 @@ int partition_median_of_three(int* arr, int low, int high) {
         }
     }
 
-    swap(&arr[i], &arr[high - 1]);
+    swap(&array[i], &array[high - 1]);
     return i;
 }
 
 
-void quicksort_median_of_three_sort(int* arr, int low, int high) {
+void quicksort_median_of_three_sort(int* array, int low, int high) {
+
+    assert(array);
 
     if (low + 2 <= high) {
 
-        int pi = partition_median_of_three(arr, low, high);
-        quicksort_median_of_three_sort(arr, low, pi - 1);
-        quicksort_median_of_three_sort(arr, pi + 1, high);
+        int mid = partition_median_of_three(array, low, high);
+        quicksort_median_of_three_sort(array, low, mid - 1);
+        quicksort_median_of_three_sort(array, mid + 1, high);
     } 
     
-    else if (low < high && arr[low] > arr[high]) {
+    else if (low < high && array[low] > array[high]) {
 
-        swap(&arr[low], &arr[high]);
+        swap(&array[low], &array[high]);
     }
 }
 
 
-void median_of_three_sort(int* arr, unsigned int n) {
+void median_of_three_quick_sort(int* array, int n) {
     
-    quicksort_median_of_three_sort(arr, 0, n - 1);
+    quicksort_median_of_three_sort(array, 0, n - 1);
 }
 
 #endif

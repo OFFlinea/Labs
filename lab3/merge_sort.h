@@ -1,102 +1,87 @@
-#ifndef MERGE_SORT.H
-#define MERGE_SORT.H
+#ifndef MERGE_SORT_H
+#define MERGE_SORT_H
 
-void merge(int* arr, int l, int m, int r) {
+void merge(int* array, const size_t left, const size_t mid, const size_t right) {
 
-    int i = 0, j = 0, k = 0;
-    int n1 = m - l + 1;
-    int n2 = r - m;
+    assert(array);
 
-    int L[n1] = {}, R[n2] = {};
+    size_t left_i = 0;
+    size_t right_i = 0;
 
-    for (i = 0; i < n1; i++) {
+    int* sorted_array = (int*) calloc(right - left, sizeof(int));
 
-        L[i] = arr[l + i];
+    if (!sorted_array) {
+
+        printf("No memory\n");
+        return;
     }
 
-    for (j = 0; j < n2; j++) {
+    while (left + left_i < mid && mid + right_i < right) {
 
-        R[j] = arr[m + 1 + j];
-    }
+        if (array[left + left_i] < array[mid + right_i]) {
 
-    i = 0;
-    j = 0;
-    k = l;
+            sorted_array[left_i++ + right_i] = array[left + left_i];
+        }
 
-    while (i < n1 && j < n2) {
-
-        if (L[i] <= R[j]) {
-
-            arr[k] = L[i];
-            i++;
-        } 
-        
         else {
 
-            arr[k] = R[j];
-            j++;
-        }
-
-        k++;
-    }
-
-    while (i < n1) {
-
-        arr[k] = L[i];
-        i++;
-        k++;
-    }
-
-    while (j < n2) {
-
-        arr[k] = R[j];
-        j++;
-        k++;
-    }
-}
-
-
-void merge_recursive_sort(int* arr, int l, int r) {
-
-    if (l < r) {
-
-        int m = l + (r - l) / 2;
-
-        merge_recursive_sort(arr, l, m);
-        merge_recursive_sort(arr, m + 1, r);
-
-        merge(arr, l, m, r);
-    }
-}
-
-
-void recursive_merge_sort(int* arr, unsigned int n) {
-
-    merge_recursive_sort(arr, 0, n);
-}
-
-
-void iterative_merge_sort(int* arr, unsigned int n) {
-
-    int curr_size = 0;
-    int left_start = 0;
-    
-    for (curr_size = 1; curr_size <= n - 1; curr_size = 2 * curr_size) {
-
-        for (left_start = 0; left_start < n - 1; left_start += 2 * curr_size) {
-
-            int mid = min(left_start + curr_size - 1, n - 1);
-            int right_end = min(left_start + 2 * curr_size - 1, n - 1);
-
-            merge(arr, left_start, mid, right_end);
+            sorted_array[left_i + right_i++] = array[mid + right_i];
         }
     }
+
+    while (left + left_i < mid) {
+
+        sorted_array[left_i++ + right_i] = array[left + left_i];
+    }
+
+    while (mid + right_i < right) {
+
+        sorted_array[left_i + right_i++] = array[mid + right_i];
+    }
+
+    for (int curr_size = 0; curr_size < left_i + right_i; curr_size++) {
+
+        array[left + curr_size] = sorted_array[curr_size];
+    }
 }
 
 
-int min(int x, int y) {
-    
-    return (x < y) ? x : y;
+void r_merge_sort(int* array, size_t left, size_t right) {
+
+    assert(array);
+
+    if (right - left <= 1) {
+
+        return;
+    }
+
+    int mid = left + (right - left) / 2;
+
+    r_merge_sort(array, left, mid);
+    r_merge_sort(array, mid, right);
+    merge(array, left, mid, right);
+}
+
+
+void recursive_merge_sort(int* array, int n) {
+
+    assert(array);
+
+    r_merge_sort(array, 0, n);
+}
+
+
+void iterative_merge_sort(int* array, int n) {
+
+    assert(array);
+
+    for (int curr_size = 1; curr_size < n; curr_size *= 2) {
+
+        for (int left = 0; left < n - curr_size; left += 2 * curr_size) {
+
+            merge(array, left, left + curr_size, (left + 2 * curr_size < n) ? left + 2 * curr_size : n);
+        }
+    }
 }
 
 #endif

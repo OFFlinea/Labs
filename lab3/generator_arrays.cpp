@@ -7,6 +7,7 @@ int main(const int argc, const char** argv) {
 
     int array_size = (int) strtol(argv[1], NULL, 10);
     int value_limit = (int) strtol(argv[2], NULL, 10);
+    int seed = (int) strtol(argv[3], NULL, 10);
     int* array = (int*) calloc(array_size, sizeof(int));
 
     if (!array) {
@@ -15,7 +16,7 @@ int main(const int argc, const char** argv) {
         return 1;
     }
 
-    srand((size_t) time(NULL));
+    srand(seed);
 
     for (int i = 0; i < array_size; i++) {
 

@@ -15,7 +15,7 @@ dir=$5
 
 for ((size=from;size<=to;size+=step)); do
     for k in {1..5}; do 
-        ./generator_arrays $size $limit > "$dir/${size}_${k}.in"
+        ./generator_arrays $size $limit $RANDOM > "$dir/${size}_${k}.in"
         cat "$dir/${size}_${k}.in" | ./generator_sort $size > "$dir/${size}_${k}.out"
     done
 done
