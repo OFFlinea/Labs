@@ -5,6 +5,9 @@
 
 typedef int elem_t;
 
+#define OK 1
+#define ERROR 0
+
 struct Stack
 {
     elem_t* array;

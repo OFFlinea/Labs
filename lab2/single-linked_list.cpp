@@ -6,40 +6,11 @@
 #include <time.h>
 
 
-int main() {
-
-    struct Stack* st = stack_ctr();
-
-    clock_t begin = clock();
-
-    for (int i = 0; i < 1e6; i++) {
-
-        push(st, &i);
-    }
-
-    // begin = clock(); // Для теста 3 раскомментить
-
-    //функция с тестом
-
-    test2(st, 1);
-
-    stack_dtr(st);
-
-    clock_t end = clock();
-
-    printf("%lf\n", (double) (end - begin) / CLOCKS_PER_SEC);
-
-    return 0;
-}
-
-
 struct Stack* stack_ctr() {
 
     struct Stack* st = (struct Stack*) calloc(1, sizeof(struct Stack));
 
     if (!st) {
-
-        printf("No memory\n");
 
         return NULL;
     }
@@ -56,8 +27,6 @@ int push(struct Stack* st, void* buffer) {
     struct Node* new_elem = (struct Node*) calloc(1, sizeof(struct Node));
 
     if (!new_elem) {
-
-        printf("No memory\n");
 
         return ERROR;
     }

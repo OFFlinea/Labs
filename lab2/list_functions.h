@@ -3,6 +3,9 @@
 
 typedef int elem_t;
 
+#define OK 1
+#define ERROR 0
+
 struct Node
 {
     elem_t data;

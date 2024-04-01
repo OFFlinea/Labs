@@ -5,6 +5,33 @@
 #include <assert.h>
 
 
+int main() {
+
+    struct Stack* st = stack_ctr(10, sizeof(elem_t));
+
+    clock_t begin = clock();
+
+    for (int i = 0; i < 1e6; i++) {
+
+        push(st, &i);
+    }
+
+    // begin = clock(); // Для теста 3 раскомментить
+
+    //функция с тестом
+
+    test2(st, 1);
+
+    stack_dtr(st);
+
+    clock_t end = clock();
+
+    printf("%lf\n", (double) (end - begin) / CLOCKS_PER_SEC);
+
+    return 0;
+}
+
+
 void test1(struct Stack* st, int start) {
 
     if (start) {
