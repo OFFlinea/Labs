@@ -17,7 +17,10 @@ int main(int argc, char** argv) {
 
     for (int i = 0; i < array_size; i++) {
 
-        scanf("%d", &array[i]);
+        if (!scanf("%d", &array[i])) {
+
+            return 1;
+        }
     }
 
     qsort(array, array_size, sizeof(int), cmp_int);

@@ -43,6 +43,8 @@ void merge(int* array, const size_t left, const size_t mid, const size_t right) 
 
         array[left + curr_size] = sorted_array[curr_size];
     }
+
+    free(sorted_array);
 }
 
 
