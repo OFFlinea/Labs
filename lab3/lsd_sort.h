@@ -44,7 +44,6 @@ void lsd_sort(int* array, int n) {
 
     if (!result) {
 
-        printf("No memory\n");
         return;
     }
 

@@ -1,7 +1,19 @@
 #ifndef SELECTION_SORT_H
 #define SELECTION_SORT_H
 
-void selection_sort(int* arr, int n) {
+
+void swap(int* first, int* second) {
+
+    assert(first);
+    assert(second);
+
+    int temp = *first;
+    *first = *second;
+    *second = temp;
+}
+
+
+void selection_sort(int* array, int n) {
 
     int i = 0, j = 0, min_idx = 0, temp = 0;
 
@@ -11,15 +23,13 @@ void selection_sort(int* arr, int n) {
 
         for (j = i + 1; j < n; j++) {
 
-            if (arr[j] < arr[min_idx]) {
+            if (array[j] < array[min_idx]) {
 
                 min_idx = j;
             }
         }
 
-        temp = arr[min_idx];
-        arr[min_idx] = arr[i];
-        arr[i] = temp;
+        swap(array + i, array + min_idx);
     }
 }
 

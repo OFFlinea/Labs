@@ -1,6 +1,16 @@
 #ifndef BUBBLE_SORT_H
 #define BUBBLE_SORT_H
 
+void swap(int* first, int* second) {
+
+    assert(first);
+    assert(second);
+
+    int temp = *first;
+    *first = *second;
+    *second = temp;
+}
+
 void bubble_sort(int* arr, int n) {
 
     int i = 0, j = 0, temp = 0;
@@ -11,9 +21,7 @@ void bubble_sort(int* arr, int n) {
 
             if (arr[j] > arr[j + 1]) {
 
-                temp = arr[j];
-                arr[j] = arr[j + 1];
-                arr[j + 1] = temp;
+                swap(arr + j, arr + j + 1);
             }
         }
     }

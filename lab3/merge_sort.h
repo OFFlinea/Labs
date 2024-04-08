@@ -1,7 +1,13 @@
 #ifndef MERGE_SORT_H
 #define MERGE_SORT_H
 
-void merge(int* array, const size_t left, const size_t mid, const size_t right) {
+enum status
+{
+    ERROR,
+    OK
+};
+
+enum status merge(int* array, const size_t left, const size_t mid, const size_t right) {
 
     assert(array);
 
@@ -12,8 +18,7 @@ void merge(int* array, const size_t left, const size_t mid, const size_t right) 
 
     if (!sorted_array) {
 
-        printf("No memory\n");
-        return;
+        return ERROR;
     }
 
     while (left + left_i < mid && mid + right_i < right) {
@@ -45,6 +50,8 @@ void merge(int* array, const size_t left, const size_t mid, const size_t right) 
     }
 
     free(sorted_array);
+
+    return OK;
 }
 
 
@@ -61,7 +68,11 @@ void r_merge_sort(int* array, size_t left, size_t right) {
 
     r_merge_sort(array, left, mid);
     r_merge_sort(array, mid, right);
-    merge(array, left, mid, right);
+    
+    if(!merge(array, left, mid, right)) {
+
+        return;
+    }
 }
 
 

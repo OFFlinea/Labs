@@ -1,6 +1,23 @@
 #ifndef HEAP_SORT_H
 #define HEAP_SORT_H
 
+int get_child(int largest, int k, int pos) {
+
+    return largest * k + pos;
+}
+
+
+void swap(int* first, int* second) {
+
+    assert(first);
+    assert(second);
+
+    int temp = *first;
+    *first = *second;
+    *second = temp;
+}
+
+
 void heapify(int* array, int n, int i, int k) {
     
     assert(array);
@@ -9,7 +26,7 @@ void heapify(int* array, int n, int i, int k) {
 
     for (int j = 1; j <= k; j++) {
 
-        int child = i * k + j;
+        int child =  get_child(i, k, j);
 
         if (child < n && array[largest] < array[child]) {
 
@@ -19,10 +36,7 @@ void heapify(int* array, int n, int i, int k) {
 
     if (largest != i) {
 
-        int temp = array[i];
-        array[i] = array[largest];
-        array[largest] = temp;
-
+        swap(array + i, array + largest);
         heapify(array, n, largest, k);
     }
 }
@@ -41,9 +55,7 @@ void heap_sort(int* array, int n, int k) {
 
     for (int i = n - 1; i > 0; i--) {
 
-        int temp = array[0];
-        array[0] = array[i];
-        array[i] = temp;
+        swap(array, array + i);
 
         heapify(array, i, 0, k);
     }
