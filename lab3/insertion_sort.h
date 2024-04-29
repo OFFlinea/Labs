@@ -1,24 +1,15 @@
-#ifndef INSERTION_SORT.H
-#define INSERTION_SORT.H
+#ifndef INSERTION_SORT_H
+#define INSERTION_SORT_H
 
 
-void insertion_sort(int* arr, unsigned int n) {
+void insertion_sort(int* arr, int n);
 
-    int i = 0, key = 0, j = 0;
+int rec_binarySearch(int* a, int item, int low, int high);
 
-    for (i = 1; i < n; i++) {
+void bin1_insertion_sort(int* a, int n);
 
-        key = arr[i];
-        j = i - 1;
+int it_binarySearch(int* a, int item, int low, int high);
 
-        while (j >= 0 && arr[j] > key) {
-
-            arr[j + 1] = arr[j];
-            j = j - 1;
-        }
-
-        arr[j + 1] = key;
-    }
-}
+void bin2_insertion_sort(int* a, int n);
 
 #endif
