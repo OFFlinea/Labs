@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <stdbool.h>
 
 
 void swap(int* a, int* b) {
@@ -15,7 +16,7 @@ void swap(int* a, int* b) {
 }
 
 
-int partitionLomuto(int* array, int low, int high) {
+int Lomuto_partition(int* array, int low, int high) {
 
     assert(array);
 
@@ -42,7 +43,7 @@ void lomuto_quick_sort(int* array, int low, int high) {
 
     if (low < high) {
 
-        int mid = partitionLomuto(array, low, high);
+        int mid = Lomuto_partition(array, low, high);
 
         lomuto_quick_sort(array, low, mid - 1);
         lomuto_quick_sort(array, mid + 1, high);
@@ -62,9 +63,11 @@ int median_of_three_random(int* array, int low, int high) {
 
     assert(array);
 
-    int random1 = low + rand() % (high - low + 1);
-    int random2 = low + rand() % (high - low + 1);
-    int random3 = low + rand() % (high - low + 1);
+    int size = high - low + 1;
+
+    int random1 = low + rand() % size;
+    int random2 = low + rand() % size;
+    int random3 = low + rand() % size;
 
     if (array[random1] <= array[random2] && array[random2] <= array[random3] || 
         array[random3] <= array[random2] && array[random2] <= array[random1]) {
@@ -82,7 +85,7 @@ int median_of_three_random(int* array, int low, int high) {
 }
 
 
-int partitionHoare(int* array, int low, int high) {
+int Hoare_partition(int* array, int low, int high) {
 
     assert(array);
 
@@ -111,16 +114,16 @@ int partitionHoare(int* array, int low, int high) {
 }
 
 
-void hoare_qsort(int* array, int left, int right) {
+void hoare_quick_sort(int* array, int left, int right) {
 
     assert(array);
 
     if (left < right) {
 
-        int mid = partitionHoare(array, left, right);
+        int mid = Hoare_partition(array, left, right);
 
-        hoare_qsort(array, left, mid);
-        hoare_qsort(array, mid + 1, right);
+        hoare_quick_sort(array, left, mid);
+        hoare_quick_sort(array, mid + 1, right);
     }
 }
 
@@ -129,11 +132,11 @@ void Hoare_quick_sort(int* array, int n) {
 
     assert(array);
 
-    hoare_qsort(array, 0, n - 1);
+    hoare_quick_sort(array, 0, n - 1);
 }
 
 
-void partitionThick(int* array, int low, int high, int* left_pointer, int* right_pointer) {
+void thick_partition(int* array, int low, int high, int* left_pointer, int* right_pointer) {
 
     assert(array);
 
@@ -183,7 +186,7 @@ void thick_quick_sort(int* array, int low, int high) {
     if (low < high) {
 
         int left_pointer = 0, right_pointer = 0;
-        partitionThick(array, low, high, &left_pointer, &right_pointer);
+        thick_partition(array, low, high, &left_pointer, &right_pointer);
 
         thick_quick_sort(array, low, left_pointer);
         thick_quick_sort(array, right_pointer, high);
@@ -225,23 +228,23 @@ int partition_center(int* array, int low, int high) {
     }
 }
 
-void Center_element_quick_sort(int* array, int low, int high) {
+void center_element_quick_sort(int* array, int low, int high) {
 
     assert(array);
 
     if (low < high) {
 
         int mid = partition_center(array, low, high);
-        Center_element_quick_sort(array, low, mid);
-        Center_element_quick_sort(array, mid + 1, high);
+        center_element_quick_sort(array, low, mid);
+        center_element_quick_sort(array, mid + 1, high);
     }
 }
 
-void center_element_quick_sort(int* array, int n) {
+void Center_element_quick_sort(int* array, int n) {
 
     assert(array);
 
-    Center_element_quick_sort(array, 0, n - 1);
+    center_element_quick_sort(array, 0, n - 1);
 }
 
 
@@ -300,15 +303,15 @@ int partition_median_of_three(int* array, int low, int high) {
 }
 
 
-void quicksort_median_of_three_sort(int* array, int low, int high) {
+void median_of_three_qsort(int* array, int low, int high) {
 
     assert(array);
 
     if (low + 2 <= high) {
 
         int mid = partition_median_of_three(array, low, high);
-        quicksort_median_of_three_sort(array, low, mid - 1);
-        quicksort_median_of_three_sort(array, mid + 1, high);
+        median_of_three_qsort(array, low, mid - 1);
+        median_of_three_qsort(array, mid + 1, high);
     } 
     
     else if (low < high && array[low] > array[high]) {
@@ -318,7 +321,7 @@ void quicksort_median_of_three_sort(int* array, int low, int high) {
 }
 
 
-void median_of_three_quick_sort(int* array, int n) {
+void Median_of_three_quick_sort(int* array, int n) {
     
-    quicksort_median_of_three_sort(array, 0, n - 1);
+    median_of_three_qsort(array, 0, n - 1);
 }

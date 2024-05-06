@@ -7,9 +7,12 @@
 #include <sys/stat.h>
 #include <sys/time.h>
 
-int cmp(const void* first, const void* second) {
+int cmp(const void* num1, const void* num2) {
 
-    return *((const int*) first) - *((const int*) second);
+    const int first = *((const int*) num1);
+    const int second = *((const int*) num2);
+
+    return (first > second) - (first < second);
 }
 
 

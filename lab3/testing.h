@@ -9,10 +9,6 @@
 #include <sys/stat.h>
 #include <sys/time.h>
 
-
-int cmp(const void* first, const void* second);
-
-
 double* test_sorts(const char* path, void (*sort_func)(int*, int), const char* result_path, int from, int to, int step);
 
 #endif

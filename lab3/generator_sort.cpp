@@ -40,5 +40,8 @@ int main(int argc, char** argv) {
 
 int cmp_int(const void* num1, const void* num2) {
 
-    return *((const int*) num1) - *((const int*) num2);
+    const int first = *((const int*) num1);
+    const int second = *((const int*) num2);
+
+    return (first > second) - (first < second);
 }
