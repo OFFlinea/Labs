@@ -1,3 +1,9 @@
-*.o
 *.exe
+*.o
+*.txt
+big_tests
+small_tests
+very_small_tests
+test_most_dublicates
+*.py
 *.vscode
